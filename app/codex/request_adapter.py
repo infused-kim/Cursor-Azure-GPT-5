@@ -45,7 +45,6 @@ class CursorRequestAdapter:
         del path
         if not isinstance(payload, dict):
             raise UnsupportedCursorShape("Cursor request body must be a JSON object.")
-        self._validate_model(payload)
         self._validate_cursor_marker(payload, headers)
 
         if "messages" in payload:
@@ -60,6 +59,7 @@ class CursorRequestAdapter:
             )
         inbound_model = body.get("model")
         self._rewrite_model(body)
+        self._validate_model(body)
         upstream_model = body.get("model")
         reasoning = body.get("reasoning") if isinstance(body, dict) else None
         effort = reasoning.get("effort") if isinstance(reasoning, dict) else None

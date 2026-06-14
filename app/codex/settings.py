@@ -49,15 +49,6 @@ def parse_codex_model_rewrites(
             )
         rewrites[source] = target
 
-    supported = set(supported_models)
-    unsupported = sorted(
-        model for pair in rewrites.items() for model in pair if model not in supported
-    )
-    if unsupported:
-        raise ServiceConfigurationError(
-            "CODEX_MODEL_REWRITES references unsupported model(s): "
-            + ", ".join(unsupported)
-        )
     return rewrites
 
 
